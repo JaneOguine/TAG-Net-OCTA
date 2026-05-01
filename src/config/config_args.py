@@ -9,10 +9,8 @@ parser = argparse.ArgumentParser()
 
 # general setting
 default_json_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..src/data/get_split/split.json"))
-parser.add_argument('--json_path', type=str, default="/home/oguinekj/Documents/courses/ECE5467_DL/Project/src/datasplit/all_vessel_data_split.json")
-parser.add_argument('--test_data_dir', type=str, default="/home/oguinekj/Documents/FSAM2_Needle/Test_Data/images")
-parser.add_argument('--regressor_dir', type=str, default="/home/oguinekj/Documents/Scripts/Retina_OCTA_4/src/checkpoints/Thickness_regressor_E3_MSE")
-# Thickness_regressor_E3_MSE_no_softPlus
+parser.add_argument('--json_path', type=str, default="/home/User/path/to/json_file/containing/train/test/val/split")
+
 parser.add_argument('--mode', type=str, default='train')
 parser.add_argument('--evaluate', action='store_true', help='Enable evaluation mode')
 
@@ -20,15 +18,14 @@ parser.add_argument('--total_epoch', type=int, default=200)
 parser.add_argument('--batch_size', type=int, default=16)
 parser.add_argument('--num_workers', type=int, default=4)
 
-parser.add_argument('--lr', type=float, default=1e-3)       # original 1e-4   # best for now 1e-3 (for regression)
-parser.add_argument('--min_lr', type=float, default=1e-4)   # original 1e-5   # best for now 1e-4 (for regression)
+parser.add_argument('--lr', type=float, default=1e-3)      
+parser.add_argument('--min_lr', type=float, default=1e-4) 
 
 parser.add_argument('--height', type=int, default=320) 
 parser.add_argument('--width', type=int, default=320)
 parser.add_argument('--num_classes', type=int, default=3)
 
 parser.add_argument('--lambda_skel', type=float, default=0.1)
-parser.add_argument('--lambda_dist', type=float, default=0.05)
 
 default_sam2_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../sam2_checkpoints/sam2_hiera_large.pt"))
 parser.add_argument('--sam2_path', type=str, default=default_sam2_path)
