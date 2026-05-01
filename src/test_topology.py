@@ -266,7 +266,7 @@ def test_net_baseline(args, net1, dataset, batch_size=1):
     cl_bin, cl_thin, cl_large, cldice_overall, grouped) = validate_baseline(args, net1, test_loader, save_results_dir=args.save_results_dir)
 
 
-    # ---- OVERALL ----
+    # -------------------------------- Overall Performance Metrices ----
     logging.info("========================================")
     logging.info("Model Evaluation Results (Sample-wise) - OVERALL:")
     logging.info("Dice (Overall-all_classes):    {:.4f} ± {:.4f}".format(safe_mean(overall_dice), safe_std(overall_dice)))
@@ -285,7 +285,7 @@ def test_net_baseline(args, net1, dataset, batch_size=1):
     logging.info("========================================")
 
 
-    # ---- PER DATASET ----
+    # -------------------------------- Per Datast ----
     for group_key in grouped.keys():
 
         if len(grouped[group_key]["overall"]) == 0:
