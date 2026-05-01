@@ -1,13 +1,13 @@
 # Topology-Guided Feature Learning for OCTA Vessel Segmentation (TAG-Net)
 
-## 📌 Overview
+## Overview
 This project presents **Topology-Guided Adaptive Fusion Network (TAG-Net)**, a deep learning framework for retinal vessel segmentation in Optical Coherence Tomography Angiography (OCTA).
 
 Traditional segmentation methods focus on pixel-wise accuracy but often fail to preserve **vascular topology**, especially thin capillaries. This work integrates **topological priors directly into feature learning**, improving vessel connectivity and structural consistency.
 
 ---
 
-## 🖼️ Results / Visualizations
+## Results / Visualizations
 
 ### Model Architecture
 ![TAG-Net Architecture](images/architecture.png)
@@ -19,7 +19,7 @@ Traditional segmentation methods focus on pixel-wise accuracy but often fail to 
 
 ---
 
-## 🚀 Key Contributions
+## Key Contributions
 - Introduces **feature-level topology integration** (not just supervision)
 - Proposes a **topology prediction branch** for soft vessel skeletons
 - Develops a **topology-guided fusion module**
@@ -40,3 +40,28 @@ The proposed TAG-Net consists of three main components:
 
 3. **Refinement Module**
    - Enhances thin vessel segmentation using confidence-based reweighting
+
+---
+
+
+---
+
+##  Installation
+
+```bash
+git clone https://github.com/yourusername/tag-net-octa.git
+cd tag-net-octa
+pip install -r requirements.txt``
+
+---
+
+
+### 2. Train the Model
+
+```bash
+python train.py \
+    --data_dir data/ \
+    --model unet \
+    --epochs 200 \
+    --batch_size 16 \
+    --lr 1e-3
