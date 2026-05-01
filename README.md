@@ -65,7 +65,13 @@ python src/train_full_tagnet_model.py \
     --epochs 200 \
     --batch_size 16 \
     --lr 1e-3
+```
 
+---
+### 2. Evaluate the Model
+
+```bash
 python test.py \
     --checkpoint checkpoints/best_model.pth \
-    --data_dir data/test
+    --data_dir data/test'
+```
