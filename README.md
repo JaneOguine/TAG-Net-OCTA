@@ -15,7 +15,7 @@ Traditional segmentation methods focus on pixel-wise accuracy but often fail to 
 ### Qualitative Results
 ![Results](images/results.png)
 
-> 📁 Place your images inside an `images/` folder in your repository.
+> Place your images inside an `images/` folder in your repository.
 
 ---
 
@@ -43,35 +43,26 @@ The proposed TAG-Net consists of three main components:
 
 ---
 
-
----
-
-##  Installation
+## Installation
 
 ```bash
 git clone https://github.com/yourusername/tag-net-octa.git
 cd tag-net-octa
-pip install -r requirements.txt``
-
----
-
-
-### 2. Train the Model
-
-```bash
-python src/train_full_tagnet_model.py \
-    --data_dir data/ \
-    --model unet \
-    --epochs 200 \
-    --batch_size 16 \
-    --lr 1e-3
+pip install -r requirements.txt
 ```
 
 ---
-### 2. Evaluate the Model
 
-```bash
-python test.py \
-    --checkpoint checkpoints/best_model.pth \
-    --data_dir data/test'
-```
+## Train Model
+python src/train_full_tagnet_model.py  --net unet  --epochs 200 --batch_size 16 
+
+
+---
+
+# Evaluat Model
+python src/test_topolgy.py --net 
+
+
+
+
+
