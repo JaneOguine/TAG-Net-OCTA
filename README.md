@@ -10,7 +10,7 @@ Traditional segmentation methods focus on pixel-wise accuracy but often fail to 
 ## Results / Visualizations
 
 ### Model Architecture
-![TAG-Net Architecture](images/architecture.png)
+![TAG-Net Architecture](assest/Architecture.png)
 
 ### Qualitative Results
 ![Results](images/results.png)
