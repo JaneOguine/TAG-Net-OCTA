@@ -53,7 +53,7 @@ pip install -r requirements.txt
 ---
 
 ## Train Model
-python src/train_full_tagnet_model.py --name TrainedModelFolder  --net full_model  --epochs 200 --batch_size 16 --num_classes 3
+python src/train_full_tagnet_model.py --name TrainedModelFolder  --net full_model --backbone unet  --epochs 200 --batch_size 16 --num_classes 3
 
 
 ---
