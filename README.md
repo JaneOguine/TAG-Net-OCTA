@@ -59,9 +59,13 @@ pip install -r requirements.txt``
 ### 2. Train the Model
 
 ```bash
-python train.py \
+python src/train_full_tagnet_model.py \
     --data_dir data/ \
     --model unet \
     --epochs 200 \
     --batch_size 16 \
     --lr 1e-3
+
+python test.py \
+    --checkpoint checkpoints/best_model.pth \
+    --data_dir data/test
