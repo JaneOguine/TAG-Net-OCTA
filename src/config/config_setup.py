@@ -68,7 +68,7 @@ def get_net(args, pretrain=False, model=None, net=None):
         )
 
     
-    elif net_name == "gnet":
+    elif net_name == "full_model":
         net = TAGNet(
             architecture=args.backbone_name,
             encoder_name="efficientnet-b3",
@@ -77,7 +77,7 @@ def get_net(args, pretrain=False, model=None, net=None):
             encoder_weights="imagenet",
         )
     
-    elif net_name == "gtnet":
+    elif net_name == "topo":
         net = TAGNet_TopologyOnly(
             architecture=args.backbone_name,
             encoder_name="efficientnet-b3",
