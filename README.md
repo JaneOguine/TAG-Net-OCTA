@@ -57,7 +57,7 @@ python src/train_full_tagnet_model.py --name TrainedModelFolder  --net full_mode
 
 
 ---
-# Evaluat Model
+## Evaluate Model
 python src/test_topolgy.py --net full_model --backbone unet --name TrainedModel --evaluate --save_results --save_results_dir result/TrainedModelFolder/Full_Model
 
 
