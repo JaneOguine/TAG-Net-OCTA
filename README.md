@@ -46,7 +46,7 @@ The proposed TAG-Net consists of three main components:
 
 ```bash
 git clone https://github.com/yourusername/tag-net-octa.git
-cd tag-net-octa
+cd tagnet
 pip install -r requirements.txt
 ```
 
