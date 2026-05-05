@@ -36,9 +36,8 @@ parser.add_argument('--base_dir', type=str, default=default_base_dir, help='Base
 
 
 # network setting
-parser.add_argument('--net', type=str, default='cats2d',
+parser.add_argument('--net', type=str, default='unet',
                     help='Specify model type [unet | unet++ | densenet | unet3d | swin_unet]')
-
 parser.add_argument("--backbone_name", type=str, default='unet', 
                     help='Specify model type [unet | unet++ | densenet | unet3d | swin_unet]')
 parser.add_argument("--encoder_name", type=str, default="efficientnet-b3", 
@@ -48,9 +47,8 @@ parser.add_argument('--attn', action='store_true', help='add attention modules')
 parser.add_argument('--pretrain', action='store_true')
 parser.add_argument('--save_results', action='store_true')
 parser.add_argument('--save_results_dir', type=str, default='save_results3')
-
 parser.add_argument('--device', type=int, default=0)
-parser.add_argument('--in_channels', type=int, default=4)
+parser.add_argument('--in_channels', type=int, default=3)
 parser.add_argument('--out_channels', type=int, default=3) 
 
 
@@ -61,7 +59,6 @@ def setup_logging(args, mode='train'):
 
     # Get the current time and format it for the log file name
     start_time = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
     mode_prefix = 'training' if mode == 'train' else 'test'
     log_file = os.path.join(log_dir, f'{mode_prefix}_{start_time}.log')
 
@@ -74,7 +71,6 @@ def setup_logging(args, mode='train'):
             logging.StreamHandler()
         ]
     )
-
     args.save_dir = os.path.join(args.base_dir, args.name)
     logging.info("Save directory is: {}".format(args.save_dir))
     logging.info(f"Logging setup complete. Logs will be saved in {log_file}")
