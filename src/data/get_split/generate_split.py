@@ -116,7 +116,7 @@ def add_octa_dataset_fixed_split(
     with open(save_json, "w") as f:
         json.dump(split, f, indent=4)
 
-    print("\n✅ OCTA update complete.")
+    print("\n OCTA update complete.")
     print("Newly added -> Train:", new_counts["train"],
           "Val:", new_counts["val"],
           "Test:", new_counts["test"])
@@ -188,7 +188,7 @@ def add_rossa_dataset(rossa_root,
     with open(save_json, "w") as f:
         json.dump(split, f, indent=4)
 
-    print("\n✅ ROSSA update complete.")
+    print("\n ROSSA update complete.")
     print("Newly added -> Train:", new_counts["train"],
           "Val:", new_counts["val"],
           "Test:", new_counts["test"])
@@ -213,21 +213,11 @@ def add_rose_dataset(
     print(f"ADDING ROSE DATASET FROM: {rose_root}")
 
     new_counts = {"train": 0, "val": 0, "test": 0}
-
-    # Define all possible train/test locations
     rose_splits = []
 
     # ROSE-1 SVC
     rose_splits.append(("train", os.path.join(rose_root, "ROSE-1", "SVC", "train")))
     rose_splits.append(("test",  os.path.join(rose_root, "ROSE-1", "SVC", "test")))
-
-    # # ROSE-1 DVC (if you want it)
-    # rose_splits.append(("train", os.path.join(rose_root, "ROSE-1", "DVC", "train")))
-    # rose_splits.append(("test",  os.path.join(rose_root, "ROSE-1", "DVC", "test")))
-
-    # # ROSE-2
-    # rose_splits.append(("train", os.path.join(rose_root, "ROSE-2", "train")))
-    # rose_splits.append(("test",  os.path.join(rose_root, "ROSE-2", "test")))
 
     for split_name, base_folder in rose_splits:
 
@@ -240,15 +230,11 @@ def add_rose_dataset(
 
         image_paths = collect_files(img_dir)
         thick_paths = collect_files(thick_dir)
-        # thin_paths = collect_files(thin_dir)
-
         thick_dict = {stem(p): p for p in thick_paths}
-        # thin_dict  = {stem(p): p for p in thin_paths}
 
         print(f"\n[{split_name.upper()}] {base_folder}")
         print("Images:", len(image_paths))
         print("Thick GT:", len(thick_paths))
-        # print("Thin GT:", len(thin_paths))
 
         for img_path in image_paths:
 
@@ -256,16 +242,11 @@ def add_rose_dataset(
                 continue
 
             key = stem(img_path)
-
             large_label_path = thick_dict.get(key)
-            # cap_label_path   = thin_dict.get(key)
 
             if large_label_path is None:
                 raise FileNotFoundError(f"Missing thick_gt for {key} in {thick_dir}")
-
-            # if cap_label_path is None:
-            #     raise FileNotFoundError(f"Missing thin_gt for {key} in {thin_dir}")
-
+                
             paired_data = {
                 "image": img_path,
                 "large_label": large_label_path,
@@ -281,7 +262,7 @@ def add_rose_dataset(
     with open(save_json, "w") as f:
         json.dump(split, f, indent=4)
 
-    print("\n✅ ROSE update complete.")
+    print("\n ROSE update complete.")
     print("Newly added -> Train:", new_counts["train"],
           "Val:", new_counts["val"],
           "Test:", new_counts["test"])
@@ -292,15 +273,15 @@ def add_rose_dataset(
 
 if __name__ == "__main__":
 
-    dataset_root = "/home/oguinekj/Documents/Scripts/Retina_OCTA_3/dataset"
+    dataset_root = "/home/users/Documents/Scripts/Retina_OCTA_3/dataset"
     save_json = "all_vessel_data_split.json"
 
     # Shared GT directories (one for all IDs)
-    large_gt_dir = "/home/oguinekj/Documents/Data/OCTA500/Label/GT_LargeVessel/"
-    cap_gt_dir   = "/home/oguinekj/Documents/Data/OCTA500/Label/GT_Capillary/"
+    large_gt_dir = "/home/users/Documents/Data/OCTA500/Label/GT_LargeVessel/"
+    cap_gt_dir   = "/home/users/Documents/Data/OCTA500/Label/GT_Capillary/"
 
     # OCTA500 6mm image directory
-    octa6_image_dir = "/home/oguinekj/Documents/Data/OCTA500/OCTA_6mm_part8/OCTA_6mm/Projection Maps/OCTA(ILM_OPL)/"
+    octa6_image_dir = "/home/users/Documents/Data/OCTA500/OCTA_6mm_part8/OCTA_6mm/Projection Maps/OCTA(ILM_OPL)/"
     add_octa_dataset_fixed_split(
         image_dir=octa6_image_dir,
         large_gt_dir=large_gt_dir,
@@ -314,7 +295,7 @@ if __name__ == "__main__":
     )
 
     # OCTA500 3mm image directory
-    octa3_image_dir = "/home/oguinekj/Documents/Data/OCTA500/OCTA_3mm_part3/OCTA_3mm/Projection Maps/OCTA(ILM_OPL)/"
+    octa3_image_dir = "/home/users/Documents/Data/OCTA500/OCTA_3mm_part3/OCTA_3mm/Projection Maps/OCTA(ILM_OPL)/"
     add_octa_dataset_fixed_split(
         image_dir=octa3_image_dir,
         large_gt_dir=large_gt_dir,
@@ -334,7 +315,7 @@ if __name__ == "__main__":
         save_json=save_json
     )
 
-    rose_root = "/home/oguinekj/Documents/Data/ROSE"
+    rose_root = "/home/users/Documents/Data/ROSE"
     add_rose_dataset(
         rose_root=rose_root,
         save_json=save_json,
@@ -342,5 +323,5 @@ if __name__ == "__main__":
     )
 
 
-    print("\n🔥 ALL DATASETS ADDED SUCCESSFULLY!")
+    print("\n ALL DATASETS ADDED SUCCESSFULLY!")
 
