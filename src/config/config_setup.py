@@ -10,8 +10,6 @@ from torch import optim
 from models.TAGNet import *
 import cv2
 
-
-
 def get_net(args, pretrain=False, model=None, net=None):
     if torch.cuda.is_available():
         device = torch.device(f"cuda:{args.device}")  # NVIDIA GPU
@@ -27,21 +25,11 @@ def get_net(args, pretrain=False, model=None, net=None):
 
     if net_name == 'unet':
         inference_mode = True if args.mode == 'test' else False
-        net = smp.Unet(encoder_name='efficientnet-b3', encoder_weights='imagenet',
-                       in_channels=args.in_channels, classes=args.out_channels)
+        net = smp.Unet(encoder_name='efficientnet-b3', 
+                       encoder_weights='imagenet',
+                       in_channels=args.in_channels, 
+                       classes=args.out_channels)
         net.encoder.inference_mode=inference_mode 
-
-
-    elif net_name == "unet2":
-        inference_mode = True if args.mode == 'test' else False
-        net = smp.Unet(
-            encoder_name="efficientnet-b3",
-            encoder_weights="imagenet",
-            in_channels=3,
-            classes=args.num_classes
-        )
-        net.encoder.inference_mode=inference_mode 
-        
 
     elif net_name == "unetpp":
         net = smp.UnetPlusPlus(
