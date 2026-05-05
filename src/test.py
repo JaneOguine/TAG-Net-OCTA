@@ -54,9 +54,7 @@ def validate_baseline(args, net, loader, save_results_dir=None):
             images = batch["image"].to(args.device, dtype=torch.float32)
             target = batch["label"].to(args.device, dtype=torch.long)
 
-            # seg_logits, feat = net(images)
             seg_logits = net(images)
-            # seg_logits = output["seg"] 
             probs = F.softmax(seg_logits, dim=1)
             preds = torch.argmax(probs, dim=1)
 
@@ -117,9 +115,7 @@ def validate_baseline(args, net, loader, save_results_dir=None):
                 large_d = dice_binary(large_pred, large_gt).item()
                 cl_large = cldice_score(large_pred.numpy().astype(np.uint8), large_gt.numpy().astype(np.uint8))
 
-            per_class = dice_coefficient_multiclass_batch(pred.unsqueeze(0),gt.unsqueeze(0),
-                                                          args.num_classes, epsilon=1e-6)
-
+            per_class = dice_coefficient_multiclass_batch(pred.unsqueeze(0),gt.unsqueeze(0), args.num_classes, epsilon=1e-6)
             per_class = np.array(per_class).reshape(-1)
 
             valid_classes = [per_class[0]]
@@ -162,7 +158,7 @@ def validate_baseline(args, net, loader, save_results_dir=None):
             cldice_large.append(cl_large)
             cldice_overall.append(cl_overall)
 
-            # ---------------- Store grouped ----------------
+            # Store grouped 
             grouped[key]["overall"].append(overall_mean_dice)
             grouped[key]["vessel_overall"].append(mean_dice)
             grouped[key]["binary"].append(bin_d)
@@ -177,7 +173,7 @@ def validate_baseline(args, net, loader, save_results_dir=None):
             grouped[key]["cl_large"].append(cl_large)
             grouped[key]["cl_overall"].append(cl_overall)
 
-            # ---------------- SAVE RESULTS ----------------
+            #  Save results
             if args.save_results:               
                 path = os.path.split(args.save_results_dir.rstrip("/"))[-1]
                 overlay_dir = os.path.join("./all_results/overlay_results/", path)
@@ -194,30 +190,30 @@ def validate_baseline(args, net, loader, save_results_dir=None):
 
                 h0, w0 = batch["label"].shape[-2:]
 
-                # ---- Initialize output image ----
+                # Initialize output image 
                 pred_classes = np.zeros((h0, w0), dtype=np.uint8)
 
-                # ---- Convert tensors to numpy ----
+                # Convert tensors to numpy 
                 thin_np = thin_pred.cpu().numpy()
                 large_np = large_pred.cpu().numpy()
 
-                # ---- Assign class intensities ----
+                # Assign class intensities 
                 pred_classes[thin_np == 1] = 127      # thin vessels
                 pred_classes[large_np == 1] = 255     # large vessels (FIXED)
 
-                # ---- Binary masks for evaluation ----
+                # Binary masks for evaluation 
                 pred_np = (bin_pred.cpu().numpy() * 255).astype(np.uint8)
                 gt_np   = (bin_gt.cpu().numpy() * 255).astype(np.uint8)
 
-                # ---- Resize if needed ----
+                # Resize if needed 
                 if pred_np.shape != (h0, w0):
                     pred_np = cv2.resize(pred_np, (w0, h0), interpolation=cv2.INTER_NEAREST)
                     gt_np   = cv2.resize(gt_np, (w0, h0), interpolation=cv2.INTER_NEAREST)
 
-                # ---- TP / FP / FN visualization ----
+                # TP / FP / FN visualization 
                 vis, fp, fn = tpfpfn_mask_only(gt_np, pred_np)
 
-                # ---- Save outputs ----
+                #  Save outputs 
                 cv2.imwrite(os.path.join(overlay_dir, f"{base}.png"), vis)
                 cv2.imwrite(os.path.join(fp_pt, f"{base}.png"), fp)
                 cv2.imwrite(os.path.join(fn_pt, f"{base}.png"), fn)
@@ -242,9 +238,7 @@ def validate_baseline(args, net, loader, save_results_dir=None):
         cldice_thin,
         cldice_large,
         cldice_overall,
-        grouped
-    )
-
+        grouped)
 
 def test_net_baseline(args, net1, dataset, batch_size=1):
     test_loader = DataLoader(
@@ -252,8 +246,7 @@ def test_net_baseline(args, net1, dataset, batch_size=1):
         batch_size=1,
         shuffle=False,
         num_workers=args.num_workers,
-        pin_memory=True,
-    )
+        pin_memory=True,)
 
     logging.info(
         f"""Starting testing:
@@ -275,8 +268,7 @@ def test_net_baseline(args, net1, dataset, batch_size=1):
     specificity_list,
     cl_bin, cl_thin, cl_large, cldice_overall, grouped) = validate_baseline(args, net1, test_loader, save_results_dir=args.save_results_dir)
 
-
-    # ---- OVERALL ----
+    # overall 
     logging.info("========================================")
     logging.info("Model Evaluation Results (Sample-wise) - OVERALL:")
     logging.info("Dice (Overall-all_classes):    {:.4f} ± {:.4f}".format(safe_mean(overall_dice), safe_std(overall_dice)))
@@ -295,7 +287,7 @@ def test_net_baseline(args, net1, dataset, batch_size=1):
     logging.info("========================================")
 
 
-    # ---- PER DATASET ----
+    #  per dataset 
     for group_key in grouped.keys():
 
         if len(grouped[group_key]["overall"]) == 0:
