@@ -30,7 +30,7 @@ parser.add_argument('--lambda_skel', type=float, default=0.1)
 default_sam2_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "../sam2_checkpoints/sam2_hiera_large.pt"))
 parser.add_argument('--sam2_path', type=str, default=default_sam2_path)
 
-parser.add_argument('--name', dest='name', type=str, default='Needle_segmentation')
+parser.add_argument('--name', dest='name', type=str, default='vessel_segmentation')
 default_base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../checkpoints"))
 parser.add_argument('--base_dir', type=str, default=default_base_dir, help='Base dir to save checkpoints and images')
 
@@ -78,6 +78,3 @@ def setup_logging(args, mode='train'):
     args.save_dir = os.path.join(args.base_dir, args.name)
     logging.info("Save directory is: {}".format(args.save_dir))
     logging.info(f"Logging setup complete. Logs will be saved in {log_file}")
-
-
-
